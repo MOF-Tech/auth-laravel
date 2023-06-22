@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use PhpParser\Node\Expr\New_;
 
 class HandlerController extends Controller
@@ -46,11 +48,24 @@ class HandlerController extends Controller
 
         $request->validate([
              'username'=>'required',
-             'email'=>'required',
-             'password'=>'required'
+             'email'=>'required|email',
+             'password'=>'required|max:12|min:8'
         ]);
 
-       
+      
+
+        $user = New User;
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->password =Hash::make($request->password); 
+        $person =$user->save();
+
+        
+        if($person){
+            return back()->with('success','you have been registerd');
+        }else{
+            return back()->with('fail','something went wrong');
+        }
        
     }
 
