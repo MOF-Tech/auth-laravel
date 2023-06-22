@@ -20,8 +20,8 @@ use Illuminate\Support\Facades\Route;
   
 
 // Route::get('/login,[]);
-Route::get('/join', [HandlerController::class, 'index'])->name('login');
-Route::post('/login', [HandlerController::class, 'login']);
+Route::get('/join', [HandlerController::class, 'index'])->name('logged');
+Route::post('/login', [HandlerController::class, 'loginUser']);
 
 //register
 Route::get('/reg', [HandlerController::class, 'reg'])->name('reg');

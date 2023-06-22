@@ -110,6 +110,15 @@ body {
     <div class="login-page">
         <div class="form">
           <form class="login-form reg"  action="{{url('/reg-create')}}"  method="POST">
+            @if (session('success'))
+            <p style="background-color:green;color:aliceblue;">{{session('success')}}</p>
+
+            @endif
+            @if (session('error'))
+      
+            <p style="background-color:red;color:aliceblue;">{{session('error')}}</p>
+
+            @endif
             @csrf
             <div class="field">
               <input type="text" placeholder="username" name="username"  value="{{old('username')}}"/>
@@ -123,8 +132,8 @@ body {
               <input type="password" placeholder="password" name="password"    value="{{old('password')}}"/>
               <span>@error('password'){{$message}}@enderror</span>
             </div>
-            
-            <button>login</button>
+            <a href="{{url('/join')}}" >you can login here</a>
+            <button>Register</button>
           </form>
           
         </div>

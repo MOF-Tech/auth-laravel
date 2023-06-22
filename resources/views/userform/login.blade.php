@@ -111,8 +111,25 @@ body {
         <div class="form">
           
           <form class="login-form"  action="{{url('/login')}}"  method="POST">
-            <input type="email" placeholder="email" name="email"/>
-            <input type="password" placeholder="password"/>
+            {{-- @if (session('success'))
+              <p style="background-color:green;color:aliceblue;">{{session('success')}}</p>
+            
+            @endif --}}
+            @if(session('error'))
+              <p style="background-color:red;color:aliceblue;">{{session('error')}}</p>
+            
+            @endif
+            @csrf
+            <div class="field">
+              <input type="email" placeholder="email" name="email"  value="{{old('email')}}"/>  
+              <span>@error('email'){{$message}}@enderror</span>
+            </div>
+
+           <div class="field">
+            <input type="password" placeholder="password" name="password" value="{{old('password')}}"/>
+            <span>@error('password'){{$message}}@enderror</span>
+           </div>
+            
             <button>login</button>
           </form>
         </div>

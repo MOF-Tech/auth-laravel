@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use PhpParser\Node\Expr\New_;
@@ -36,6 +37,7 @@ class HandlerController extends Controller
  
 
     }
+  
 
     /**
      * Store a newly created resource in storage.
@@ -48,7 +50,7 @@ class HandlerController extends Controller
 
         $request->validate([
              'username'=>'required',
-             'email'=>'required|email',
+             'email'=>'required|email|unique:users',
              'password'=>'required|max:12|min:8'
         ]);
 
@@ -64,7 +66,34 @@ class HandlerController extends Controller
         if($person){
             return back()->with('success','you have been registerd');
         }else{
-            return back()->with('fail','something went wrong');
+            return back()->with('error','something went wrong');
+        }
+       
+    }
+    
+    public function loginUser(request$request)
+    {
+        //
+
+        $request->validate([
+            'email'=>'required|email',
+            'password'=>'required|max:12|min:8'
+        ]);
+
+        // $sub = User::where('email','=',$request->input('email'))->first();
+        $sub = User::where('email','=',$request->email)->first();
+        if($sub){
+            // return back()->with('success','you are logged in');
+
+            if(Hash::check($request->password,$sub->password)){
+
+                return redirect(url('reg'));
+
+            }else{
+                return back()->with('error','password doesnt match');
+            }
+        }else{
+            return back()->with('error','email doesnt exist');
         }
        
     }
