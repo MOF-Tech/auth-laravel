@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HandlerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('userform.login');
+// });
+  
+
+// Route::get('/login,[]);
+Route::get('/join', [HandlerController::class, 'index'])->name('login');
+Route::post('/login', [HandlerController::class, 'login']);
+
+//register
+Route::get('/reg', [HandlerController::class, 'reg'])->name('reg');
+Route::post('/reg-create', [HandlerController::class, 'store']);
+
