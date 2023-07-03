@@ -6,7 +6,8 @@ use App\Models\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use PhpParser\Node\Expr\New_;
+use Illuminate\Support\Facades\Session;
+
 
 class HandlerController extends Controller
 {
@@ -87,7 +88,8 @@ class HandlerController extends Controller
 
             if(Hash::check($request->password,$sub->password)){
 
-                return redirect(url('reg'));
+                $request->session()->put('loginId',$sub->id);
+                return redirect(url('dash'));
 
             }else{
                 return back()->with('error','password doesnt match');
@@ -95,8 +97,33 @@ class HandlerController extends Controller
         }else{
             return back()->with('error','email doesnt exist');
         }
+
+
        
     }
+    public function dash()
+    {
+        //
+          $info = array();
+          if(session::has('loginId')){
+            // loged in
+            $info = User::where('id','=',session::get('loginId'))->first();
+        //   dd($info);
+          }
+         
+        return view('dash',compact('info'));
+    }
+
+    public function logout(){
+        if(session::has('loginId')){
+            session()->pull('loginId');
+            return redirect(url('/join'))->with('success','you are logged out');
+        }
+    }
+
+
+   
+
 
     /**
      * Display the specified resource.

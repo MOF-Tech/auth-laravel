@@ -27,3 +27,10 @@ Route::post('/login', [HandlerController::class, 'loginUser']);
 Route::get('/reg', [HandlerController::class, 'reg'])->name('reg');
 Route::post('/reg-create', [HandlerController::class, 'store']);
 
+
+
+Route::get('/dash', [HandlerController::class, 'dash']);
+Route::get('/logout', [HandlerController::class, 'logout']);
+
+
+
