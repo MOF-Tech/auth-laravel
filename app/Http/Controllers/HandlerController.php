@@ -56,7 +56,6 @@ class HandlerController extends Controller
         ]);
 
       
-
         $user = New User;
         $user->username = $request->username;
         $user->email = $request->email;

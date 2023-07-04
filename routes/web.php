@@ -20,16 +20,16 @@ use Illuminate\Support\Facades\Route;
   
 
 // Route::get('/login,[]);
-Route::get('/join', [HandlerController::class, 'index'])->name('logged');
+Route::get('/join', [HandlerController::class, 'index'])->name('loged')->middleware("loged");
 Route::post('/login', [HandlerController::class, 'loginUser']);
 
 //register
-Route::get('/reg', [HandlerController::class, 'reg'])->name('reg');
+Route::get('/reg', [HandlerController::class, 'reg'])->name('reg')->middleware('loged');
 Route::post('/reg-create', [HandlerController::class, 'store']);
 
 
 
-Route::get('/dash', [HandlerController::class, 'dash']);
+Route::get('/dash', [HandlerController::class, 'dash'])->middleware('isLogged');
 Route::get('/logout', [HandlerController::class, 'logout']);
 
 
